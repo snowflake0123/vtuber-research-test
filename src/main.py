@@ -81,8 +81,7 @@ def compareByStreamingStyle(question: Question) -> None:
     print(f"Significant Difference: {isSignificantDifference(result.pvalue)}")
 
 
-def main():
-  questionnairePath = "../questionnaire"
+def main(questionnairePath: str) -> None:
   questionnaireDictionary = createQuestionnaireDictionary(questionnairePath)
   questions = sorted(list(questionnaireDictionary.keys()))
 
