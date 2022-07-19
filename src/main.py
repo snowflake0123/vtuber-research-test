@@ -1,7 +1,8 @@
 import os
 import csv
-from .types import Category, Question, Questionnaire
-from .freedman import compareByCategory, compareByStreamingStyle
+from . import types
+from . import freedman
+from . import steelDwass
 
 
 def readDirs(path: str) -> list[str]:
@@ -9,15 +10,15 @@ def readDirs(path: str) -> list[str]:
   return [f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
 
 
-def createQuestionnaireDictionary(questionnairePath: str) -> Questionnaire:
-  results: Questionnaire = {}
+def createQuestionnaireDictionary(questionnairePath: str) -> types.Questionnaire:
+  results: types.Questionnaire = {}
   questionDirs = readDirs(questionnairePath)
   for question in questionDirs:
-    results[question]: Question = {}
+    results[question]: types.Question = {}
     questionPath = os.path.join(questionnairePath, question)
     categoryDirs = readDirs(questionPath)
     for category in categoryDirs:
-      results[question][category]: Category = {}
+      results[question][category]: types.Category = {}
       categoryPath = os.path.join(questionPath, category)
       with open(os.path.join(categoryPath, "result.csv"), encoding="utf8", newline="") as f:
         results[question][category]["3d"] = []
@@ -42,9 +43,22 @@ def main(questionnairePath: str) -> None:
     q = questionnaireDictionary[question]
     print()
     # カテゴリ（ゲーム実況、ニュース解説、学習解説）で比較
-    compareByCategory(q)
+    freedman.compareByCategory(q)
     print()
     # 配信スタイル（3D, 2D, 実写）で比較
-    compareByStreamingStyle(q)
+    freedman.compareByStreamingStyle(q)
+    print()
+    print()
+
+  # 質問ごとに Steel-Dwass 検定を実施する
+  for question in questions:
+    print(f"Question: {question}")
+    q = questionnaireDictionary[question]
+    print()
+    # カテゴリ（ゲーム実況、ニュース解説、学習解説）で比較
+    steelDwass.compareByCategory(q)
+    print()
+    # 配信スタイル（3D, 2D, 実写）で比較
+    steelDwass.compareByStreamingStyle(q)
     print()
     print()

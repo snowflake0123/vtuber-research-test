@@ -5,4 +5,5 @@ dependencies:
   - autopep8=1.6.0
   - invoke=1.7.1
   - python=3.9.13
+  - scikit-posthocs=0.7.0
   - scipy=1.8.1

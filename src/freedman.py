@@ -1,5 +1,5 @@
 from scipy import stats
-from .types import Question
+from . import types
 
 
 P_THRESHOLD = 0.05
@@ -9,7 +9,7 @@ def isSignificantDifference(pValue: float):
   return pValue < P_THRESHOLD
 
 
-def compareByCategory(question: Question) -> None:
+def compareByCategory(question: types.Question) -> None:
   """カテゴリ（ゲーム実況、ニュース解説、学習解説）で比較する"""
   print("<< Friedman Test of Comparison by Category >>")
 
@@ -25,9 +25,10 @@ def compareByCategory(question: Question) -> None:
     result = stats.friedmanchisquare(gameplay, news, study)
     print(result)
     print(f"Significant Difference: {isSignificantDifference(result.pvalue)}")
+    print()
 
 
-def compareByStreamingStyle(question: Question) -> None:
+def compareByStreamingStyle(question: types.Question) -> None:
   """配信スタイル（3D, 2D, 実写）で比較する"""
   print("<< Friedman Test of Comparison by Streaming Style >>")
 
@@ -43,3 +44,4 @@ def compareByStreamingStyle(question: Question) -> None:
     result = stats.friedmanchisquare(threeD, twoD, liveAction)
     print(result)
     print(f"Significant Difference: {isSignificantDifference(result.pvalue)}")
+    print()
