@@ -1,7 +1,7 @@
 import os
 import csv
 from . import types
-from . import freedman
+from . import friedman
 from . import steelDwass
 
 
@@ -43,10 +43,10 @@ def main(questionnairePath: str) -> None:
     q = questionnaireDictionary[question]
     print()
     # カテゴリ（ゲーム実況、ニュース解説、学習解説）で比較
-    freedman.compareByCategory(q)
+    friedman.compareByCategory(q)
     print()
     # 配信スタイル（3D, 2D, 実写）で比較
-    freedman.compareByStreamingStyle(q)
+    friedman.compareByStreamingStyle(q)
     print()
     print()
 
